@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Özetle: videoyu izleme, öğren</title>
+<link href="[https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,700&family=Instrument+Sans:wght@400;500;600&display=swap](https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,700&family=Instrument+Sans:wght@400;500;600&display=swap)" rel="stylesheet">
+<style>
+:root{--bg:#efe8d8;--sf:#f8f3e6;--ink:#1c1a17;--mu:#6a645a;--ln:#d9d0ba;--ac:#2433a6;--hi:#e7b53c;--ok:#1f7a55;--no:#b3392f;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0c0f1d;--sf:#151a2e;--ink:#eceaf2;--mu:#9a9db3;--ln:#262c47;--ac:#9fb2ff;--hi:#ffcf5c;--ok:#5fd4a0;--no:#ff8a80;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0c0f1d;--sf:#151a2e;--ink:#eceaf2;--mu:#9a9db3;--ln:#262c47;--ac:#9fb2ff;--hi:#ffcf5c;--ok:#5fd4a0;--no:#ff8a80;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Instrument Sans",system-ui,sans-serif}
+h1,h2,h3,.serif{font-family:Newsreader,Georgia,serif;font-weight:700;margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.wrap{max-width:1120px;margin:auto;padding:20px 16px 64px}
+.top{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:18px}
+.logo{font-size:26px;margin-right:auto}
+.top input,.chat-in input{flex:1 1 280px;min-width:0;padding:11px 14px;border-radius:12px;border:1px solid var(--ln);background:var(--sf);color:var(--ink);font:inherit}
+.btn{padding:10px 16px;border-radius:12px;border:1px solid var(--ln);background:var(--sf);transition:opacity .15s}
+.btn:hover{opacity:.88}
+.btn.p{background:var(--ac);border-color:var(--ac);color:var(--bg);font-weight:600}
+.hero{display:flex;gap:18px;flex-wrap:wrap;align-items:end;justify-content:space-between;margin:6px 0 18px}
+.hero h2{font-size:clamp(26px,4.4vw,44px);line-height:1.1;max-width:680px}
+.mu{color:var(--mu);font-size:14px}
+.save{background:var(--hi);color:#1c1a17;padding:10px 14px;border-radius:12px;font-weight:600}
+.seg{display:inline-flex;border:1px solid var(--ln);border-radius:12px;overflow:hidden;margin-bottom:14px}
+.seg button{border:0;background:none;padding:8px 14px}
+.seg button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+.grid{display:grid;grid-template-columns:1.25fr 1fr;gap:16px;align-items:start}
+@media(max-width:840px){.grid{grid-template-columns:1fr}}
+.col{display:grid;gap:16px}
+.box{background:var(--sf);border:1px solid var(--ln);border-radius:18px;padding:20px}
+.story{min-height:440px;display:flex;flex-direction:column;touch-action:pan-y;user-select:none;overflow:hidden}
+.bars{display:flex;gap:4px;margin-bottom:22px}
+.bars i{flex:1;height:4px;border-radius:2px;background:var(--ln)}
+.bars i.on{background:var(--ac)}
+.ico{font-size:40px}
+.story h3{font-size:clamp(26px,4vw,36px);line-height:1.15;margin:10px 0 12px}
+.story p{font-family:Newsreader,Georgia,serif;font-size:20px;line-height:1.6;margin:0;max-width:60ch}
+.story .in{animation:sl .28s ease-out}
+@keyframes sl{from{opacity:0;transform:translateX(24px)}}
+@media(prefers-reduced-motion:reduce){.story .in{animation:none}}
+.foot{margin-top:auto;display:flex;gap:10px;align-items:center;padding-top:18px}
+.chip{padding:6px 12px;border-radius:99px;border:1px solid var(--ac);color:var(--ac);text-decoration:none;font-size:14px;background:none}
+.sp{margin-left:auto}
+ul.t{margin:10px 0 0;padding-left:20px}
+ul.t li{margin:6px 0}
+.big{font-size:22px;line-height:1.3}
+.q{border-radius:14px;padding:22px;font-family:Newsreader,Georgia,serif;font-size:22px;line-height:1.35;margin:12px 0}
+.t0{background:linear-gradient(135deg,#2433a6,#6b2a8a);color:#fff}
+.t1{background:#17140f;color:#f3dfa6}
+.t2{background:#e7b53c;color:#1c1a17}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.chk{display:flex;gap:10px;align-items:flex-start;padding:8px 0;cursor:pointer}
+.chk input{margin-top:5px;accent-color:var(--ac);width:18px;height:18px}
+.chk input:checked+span{text-decoration:line-through;color:var(--mu)}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:10px 14px;border-radius:12px;border:1px solid var(--ln);background:none}
+.opt.ok{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 18%,transparent)}
+.opt.no{border-color:var(--no);background:color-mix(in srgb,var(--no) 18%,transparent)}
+#load{display:none;padding:16px;margin-bottom:16px}
+.nodes{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.node{padding:10px 14px;border-radius:12px;border:1px solid var(--ln);background:var(--bg);font-size:14px}
+.node.idea{border-left:4px solid var(--ac)}
+.node.example{border-left:4px solid var(--hi)}
+.node.result{border-left:4px solid var(--ok)}
+.edges{margin-top:12px;font-size:13px;color:var(--mu);display:grid;gap:6px}
+.chat-box{max-height:260px;overflow-y:auto;display:grid;gap:10px;margin:12px 0;padding-right:4px}
+.msg{padding:10px 14px;border-radius:14px;font-size:15px;max-width:88%}
+.msg.u{background:var(--ac);color:var(--bg);margin-left:auto}
+.msg.a{background:var(--bg);border:1px solid var(--ln)}
+.chat-in{display:flex;gap:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <h1 class="logo">Özetle</h1>
+    <input id="url" type="url" placeholder="YouTube bağlantısını yapıştır (ör. TEDx konuşması)" aria-label="Video bağlantısı">
+    <button class="btn p" id="go">Analiz et</button>
+    <button class="btn" id="thm" aria-label="Tema değiştir">Açık/Koyu</button>
+  </div>
+  <div id="load" class="box mu" role="status"></div>
+  <div class="hero">
+    <div><div class="mu" id="who"></div><h2 id="ttl"></h2></div>
+    <div class="save" id="sv"></div>
+  </div>
+  <div class="seg" role="group" aria-label="Anlatım derinliği">
+    <button data-d="eli5">Çok basit</button><button data-d="standard">Standart</button><button data-d="expert">Akademik</button>
+  </div>
+  <div class="grid">
+    <div class="col">
+      <section class="box story" id="story" aria-label="Hikaye kartları"></section>
+      <section class="box" aria-label="Kavram haritası">
+        <h3>Argüman ve kavram haritası</h3>
+        <div class="nodes" id="nodes"></div>
+        <div class="edges" id="edges"></div>
+      </section>
+      <section class="box" aria-label="Videoyla sohbet">
+        <h3>Videoyla sohbet et</h3>
+        <p class="mu" style="margin:4px 0 0">Konuşmada geçen herhangi bir detayı zaman damgasıyla sor.</p>
+        <div class="chat-box" id="cbox"></div>
+        <div class="chat-in">
+          <input id="cq" type="text" placeholder="Örn: Konuşmacı bildirimler hakkında ne öneriyor?" aria-label="Soru sor">
+          <button class="btn p" id="csend">Sor</button>
+        </div>
+      </section>
+    </div>
+    <div class="col">
+      <section class="box" aria-label="Özet">
+        <h3>Tek cümlede ana fikir</h3>
+        <p class="serif big" id="big" style="margin:8px 0 0"></p>
+        <ul class="t" id="tl"></ul>
+        <div class="row" style="margin-top:14px"><button class="btn" id="aud">Sesli özeti dinle</button></div>
+      </section>
+      <section class="box" aria-label="Altın alıntılar">
+        <h3>Altın alıntılar</h3><div id="qs"></div>
+        <div class="row"><button class="btn" id="qt">Tema değiştir</button><button class="btn" id="qc">Kopyala</button><span class="mu" id="qm"></span></div>
+      </section>
+      <section class="box" aria-label="Eylem planı"><h3>Bugün uygula</h3><div id="ac"></div><p class="mu" id="acp"></p></section>
+      <section class="box" aria-label="Pekiştirme testi"><h3>Pekiştirme testi</h3><div id="quiz"></div></section>
+    </div>
+  </div>
+</div>
+<script>
+const API = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+  ? "http://localhost:8000"
+  : "";
+
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fmt=s=>Math.floor(s/60)+":"+String(Math.floor(s%60)).padStart(2,"0");
+
+const DEMO={meta:{title:"Dikkat Ekonomisi: Zamanını Geri Almak",speaker:"Örnek Konuşmacı • Demo Verisi",duration_min:18},
+big_idea:"Dikkat paradan daha kıt bir kaynaktır; onu kime verdiğin, hayatının neye benzeyeceğini belirler.",
+tldr:["Uygulamalar ürün değil, senin dikkatini satıyor.","Sürekli bildirim, derin düşünme kapasitesini aşındırıyor.","Küçük sürtünmeler (gri ekran, bildirimsiz saatler) alışkanlığı kırıyor.","Hedef kendini yoksun bırakmak değil, dikkati bilinçli harcamak."],
+cards:[
+{ts:62,icon:"🧭",title:"Dikkat senin en kıt sermayen",eli5:"Gün boyu yalnızca belli sayıda dikkat jetonun var. Onları nereye harcadığın önemli.",standard:"Zaman çoğaldıkça artmaz ama dikkat ondan da kıttır. Bir saati ekranda geçirmek, o saatin tüm verimini de götürür.",expert:"Dikkat sınırlı bir bilişsel kaynaktır. Bağlam değiştirme maliyeti, aynı süreyi çok daha düşük bir üretkenlikle geçirmene yol açar."},
+{ts:185,icon:"🎰",title:"Uygulamalar seni nasıl tutuyor",eli5:"Bazı oyunlar ve uygulamalar, bırakmak istediğinde seni geri çağıran küçük sürprizler saklar.",standard:"Sonsuz kaydırma ve değişken ödül, kumar makinelerinin kullandığı mekanizmayla çalışır. Bir sonraki içeriğin ne olacağını bilmemek merakı canlı tutar.",expert:"Değişken oranlı pekiştirme tarifesi, dopaminerjik beklenti döngüsünü sürdürür. Arayüz, durma noktalarını bilinçli olarak ortadan kaldırır."},
+{ts:402,icon:"🧠",title:"Derin düşünme aşınıyor",eli5:"Sürekli bölünürsen büyük bir yapbozu bitirmek zorlaşır, çünkü parçaları unutursun.",standard:"Her bildirim sonrası odaklanmaya dönmek dakikalar alır. Gün içinde bu kesintiler birikir ve zor işler hep yarım kalır.",expert:"Dikkat kalıntısı etkisi nedeniyle görevler arası geçiş, çalışma belleğinde artık yük bırakır. Bu da karmaşık problem çözme performansını düşürür."},
+{ts:640,icon:"🪫",title:"Sürtünme ekle, kolayı zorlaştır",eli5:"Telefonu odanın öbür köşesine bırakırsan ona uzanman zorlaşır ve daha az bakarsın.",standard:"Ekranı gri tona almak ve uygulamaları ana ekrandan kaldırmak alışkanlığı kıran küçük sürtünmelerdir. İrade yerine ortamı tasarlarsın.",expert:"Davranışı iradeye değil seçim mimarisine yaslamak, bilişsel yükü azaltır. Varsayılanları değiştirmek, tek seferlik düzenlemeyle kalıcı etki yaratır."},
+{ts:880,icon:"🌅",title:"Bildirimsiz saatler kur",eli5:"Günün bir kısmını telefonsuz geçirirsen kafan dinlenir ve fikirler kendiliğinden gelir.",standard:"Sabahın ilk ve akşamın son saatini bildirimsiz tutmak, zihne toparlanma payı verir. Konuşmacı bunu en etkili tek alışkanlık olarak anlatıyor.",expert:"Kesintisiz dönemler, varsayılan mod ağının çalışmasına izin vererek yaratıcılığı ve otobiyografik planlamayı destekler."},
+{ts:1010,icon:"🎯",title:"Amaç yoksunluk değil, bilinçli harcama",eli5:"Telefonu atmak gerekmiyor. Neye bakacağını sen seçince oyun senin eline geçiyor.",standard:"Teknolojiyi bırakmak çözüm değildir. Dikkatini hangi şeylere vermek istediğine karar verip bunu araçlarına yansıtmak asıl hedeftir.",expert:"Normatif çerçeve, kaçınmadan çok niyetlilik üzerine kurulur. Dikkat bütçesi, değer hiyerarşisiyle hizalandığında sürdürülebilir olur."}],
+quotes:[{text:"Hayatın, dikkatini verdiklerinden ibarettir.",ts:75},{text:"Sana ücretsiz sunulan şeyin bedelini zamanınla ödüyorsun.",ts:210},{text:"Önce ortamını tasarla, sonra iradene güven.",ts:655}],
+actions:["Telefonun ekranını bu akşam gri tona al.","Uyandıktan sonraki ilk 30 dakikayı bildirimsiz geçir.","En çok vakit alan üç uygulamayı ana ekrandan kaldır.","Hafta sonu bir saat telefonsuz yürüyüş planla."],
+quiz:[{q:"Konuşmacıya göre dikkat neden paradan daha kıt?",options:["Çünkü fiyatı yüksek","Çünkü sınırlı ve geri kazanılamıyor","Çünkü yalnızca şirketler kullanıyor","Çünkü ölçülemiyor"],answer:1,why:"Dikkat sınırlı bir kaynaktır; harcanan an geri gelmez."},
+{q:"Sonsuz kaydırma hangi mekanizmaya benzetiliyor?",options:["Piyango ve kumar makineleri","Sınav sistemi","Abonelik modeli","Reklam panosu"],answer:0,why:"Değişken ödül, merakı sürekli canlı tutar."},
+{q:"Konuşmacının önerdiği temel yaklaşım hangisi?",options:["Teknolojiyi tamamen bırakmak","Sadece irade göstermek","Ortamı tasarlayıp bilinçli harcamak","Daha çok bildirim açmak"],answer:2,why:"Sürtünme ekleyip niyetli seçim yapmak sürdürülebilir olandır."}],
+concept_graph:{
+  nodes:[
+    {id:"n1",label:"Dikkat Ekonomisi",type:"idea"},
+    {id:"n2",label:"Sonsuz Kaydırma & Değişken Ödül",type:"example"},
+    {id:"n3",label:"Derin Düşünme Kaybı",type:"result"},
+    {id:"n4",label:"Seçim Mimarisi & Sürtünme",type:"idea"},
+    {id:"n5",label:"Bilinçli Teknoloji Kullanımı",type:"result"}
+  ],
+  edges:[
+    {from:"n1",to:"n2",label:"kullanır"},
+    {from:"n2",to:"n3",label:"yol açar"},
+    {from:"n4",to:"n5",label:"sağlar"}
+  ]
+},
+_transcript:""};
+
+let D=DEMO,S={i:0,d:"standard",qi:0,sc:0,th:0,done:false},sx=null;
+
+function story(){const c=D.cards[S.i];
+ $("#story").innerHTML=`<div class="bars">${D.cards.map((_,k)=>`<i class="${k<=S.i?"on":""}"></i>`).join("")}</div><div class="in" key="${S.i}"><div class="ico">${esc(c.icon||"💡")}</div><h3>${esc(c.title)}</h3><p>${esc(c[S.d]||c.standard)}</p></div>
+ <div class="foot">${D.meta.url?`<a class="chip" target="_blank" rel="noopener" href="${esc(D.meta.url)}?t=${c.ts}">Videoda ${fmt(c.ts)}</a>`:`<span class="chip">${fmt(c.ts)}</span>`}<span class="mu sp">${S.i+1} / ${D.cards.length}</span><button class="btn" data-n="-1" aria-label="Önceki">‹</button><button class="btn" data-n="1" aria-label="Sonraki">›</button></div>`;}
+
+function go(n){S.i=Math.max(0,Math.min(D.cards.length-1,S.i+n));story();}
+
+function quotes(){$("#qs").innerHTML=D.quotes.map(q=>`<div class="q t${S.th}">“${esc(q.text)}”<div class="mu" style="color:inherit;opacity:.7;font:14px 'Instrument Sans',sans-serif;margin-top:8px">${fmt(q.ts)}</div></div>`).join("");}
+
+function graph(){
+ const g=D.concept_graph||{nodes:[],edges:[]};
+ const map=Object.fromEntries(g.nodes.map(n=>[n.id,n.label]));
+ $("#nodes").innerHTML=g.nodes.map(n=>`<div class="node ${esc(n.type||"idea")}"><strong>${esc(n.label)}</strong></div>`).join("");
+ $("#edges").innerHTML=g.edges.map(e=>`<div>• <b>${esc(map[e.from]||e.from)}</b> → <i>${esc(e.label)}</i> → <b>${esc(map[e.to]||e.to)}</b></div>`).join("");
+}
+
+function acts(){const n=[...document.querySelectorAll("#ac input:checked")].length;$("#acp").textContent=`${n} / ${D.actions.length} tamamlandı`;}
+
+function quiz(){const q=D.quiz[S.qi],el=$("#quiz");S.done=false;
+ if(!q){el.innerHTML=`<p class="serif big">Skorun: ${S.sc} / ${D.quiz.length}</p><button class="btn" id="rq">Tekrar çöz</button>`;return;}
+ el.innerHTML=`<p class="mu">Soru ${S.qi+1} / ${D.quiz.length}</p><p style="font-weight:600">${esc(q.q)}</p>${q.options.map((o,k)=>`<button class="opt" data-a="${k}">${esc(o)}</button>`).join("")}<p class="mu" id="why"></p>`;}
+
+function render(d){D=d;S.i=0;S.qi=0;S.sc=0;
+ const m=d.meta,mins=m.duration_min||18;
+ $("#ttl").textContent=m.title||"";$("#who").textContent=m.speaker||"";
+ $("#sv").textContent=`${mins} dakikalık video yerine 2 dakikada %${Math.max(0,Math.round(100-200/mins))} bilgi`;
+ $("#big").textContent=d.big_idea||"";$("#tl").innerHTML=(d.tldr||[]).map(t=>`<li>${esc(t)}</li>`).join("");
+ $("#ac").innerHTML=d.actions.map(a=>`<label class="chk"><input type="checkbox"><span>${esc(a)}</span></label>`).join("");
+ $("#cbox").innerHTML="";
+ document.querySelectorAll(".seg button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.d===S.d));
+ story();quotes();graph();acts();quiz();}
+
+document.addEventListener("click",e=>{const t=e.target;
+ if(t.dataset.n)return go(+t.dataset.n);
+ if(t.dataset.d){S.d=t.dataset.d;document.querySelectorAll(".seg button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.d===S.d));return story();}
+ if(t.dataset.a!==undefined&&!S.done){S.done=true;const q=D.quiz[S.qi],k=+t.dataset.a;if(k===q.answer)S.sc++;
+  document.querySelectorAll(".opt").forEach((b,j)=>{b.classList.toggle("ok",j===q.answer);if(j===k&&k!==q.answer)b.classList.add("no")});
+  $("#why").innerHTML=esc(q.why)+`<br><button class="btn" id="nq" style="margin-top:10px">Sonraki</button>`;return;}
+ if(t.id==="nq"){S.qi++;return quiz();}
+ if(t.id==="rq"){S.qi=0;S.sc=0;return quiz();}
+ if(t.closest("#story")&&!t.closest("button,a")){const r=$("#story").getBoundingClientRect();go(e.clientX-r.left<r.width*.35?-1:1);}});
+
+document.addEventListener("change",e=>{if(e.target.closest("#ac"))acts();});
+document.addEventListener("keydown",e=>{if(e.target.tagName==="INPUT")return;if(e.key==="ArrowRight")go(1);if(e.key==="ArrowLeft")go(-1);});
+$("#story").addEventListener("pointerdown",e=>sx=e.clientX);
+$("#story").addEventListener("pointerup",e=>{if(sx!==null&&Math.abs(e.clientX-sx)>50){go(e.clientX<sx?1:-1);e.stopPropagation();}sx=null;},true);
+$("#qt").onclick=()=>{S.th=(S.th+1)%3;quotes();};
+$("#qc").onclick=async()=>{try{await navigator.clipboard.writeText(D.quotes.map(q=>`“${q.text}”`).join("\n"));$("#qm").textContent="Kopyalandı";}catch(_){$("#qm").textContent="Kopyalanamadı";}};
+$("#thm").onclick=()=>{const r=document.documentElement,dark=r.dataset.theme?r.dataset.theme==="dark":matchMedia("(prefers-color-scheme:dark)").matches;r.dataset.theme=dark?"light":"dark";};
+$("#aud").onclick=()=>{const s=window.speechSynthesis;if(!s)return;if(s.speaking){s.cancel();return;}const u=new SpeechSynthesisUtterance([D.big_idea,...D.tldr].join(" "));u.lang="tr-TR";s.speak(u);};
+
+$("#go").onclick=async()=>{
+ const url=$("#url").value.trim(),L=$("#load");
+ if(!url)return $("#url").focus();
+ L.style.display="block";
+ L.textContent="YouTube altyazısı çekiliyor ve yapay zeka kartları hazırlıyor…";
+ try{
+   const r=await fetch(API+"/api/analyze",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({url})});
+   const data=await r.json();
+   if(!r.ok)throw new Error(data.detail||"Analiz sırasında hata oluştu.");
+   render(data);
+   L.style.display="none";
+ }catch(err){
+   L.textContent="Hata: "+err.message;
+ }
+};
+
+async function askChat(){
+ const inp=$("#cq"),q=inp.value.trim(),box=$("#cbox");
+ if(!q)return;
+ inp.value="";
+ box.innerHTML+=`<div class="msg u">${esc(q)}</div>`;
+ if(!D._transcript){
+   box.innerHTML+=`<div class="msg a">Demo modundasın. Gerçek sohbet için yukarıdan bir YouTube linki analiz et.</div>`;
+   return;
+ }
+ const wait=document.createElement("div");
+ wait.className="msg a";wait.textContent="Düşünüyor…";
+ box.appendChild(wait);box.scrollTop=box.scrollHeight;
+ try{
+   const r=await fetch(API+"/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({transcript:D._transcript,question:q})});
+   const data=await r.json();
+   wait.textContent=r.ok?data.answer:(data.detail||"Hata oluştu.");
+ }catch(e){
+   wait.textContent="Bağlantı hatası.";
+ }
+ box.scrollTop=box.scrollHeight;
+}
+$("#csend").onclick=askChat;
+$("#cq").addEventListener("keydown",e=>{if(e.key==="Enter")askChat();});
+
+render(DEMO);
+</script>
+</body>
+</html>
